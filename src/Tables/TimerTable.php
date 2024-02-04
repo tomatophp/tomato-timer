@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tables;
+namespace TomatoPHP\TomatoTimer\Tables;
 
 use Illuminate\Http\Request;
 use ProtoneMedia\Splade\AbstractTable;
@@ -18,7 +18,7 @@ class TimerTable extends AbstractTable
     public function __construct(public mixed $query=null)
     {
         if(!$query){
-            $this->query = \App\Models\Timer::query();
+            $this->query = \TomatoPHP\TomatoTimer\Models\Timer::query();
         }
     }
 
@@ -57,7 +57,7 @@ class TimerTable extends AbstractTable
             )
             ->bulkAction(
                 label: trans('tomato-admin::global.crud.delete'),
-                each: fn (\App\Models\Timer $model) => $model->delete(),
+                each: fn (\TomatoPHP\TomatoTimer\Models\Timer $model) => $model->delete(),
                 after: fn () => Toast::danger(__('Timer Has Been Deleted'))->autoDismiss(2),
                 confirm: true
             )

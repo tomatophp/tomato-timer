@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace TomatoPHP\TomatoTimer\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use TomatoPHP\TomatoCategory\Models\Type;
 
 /**
  * @property integer $id
@@ -29,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $created_at
  * @property string $updated_at
  * @property Account $account
- * @property User $user
+ * @property User $employee
  * @property Issue $issue
  * @property Project $project
  * @property Type[] $types
@@ -47,13 +48,13 @@ class Timer extends Model
      */
     public function account()
     {
-        return $this->belongsTo('App\Models\Account');
+        return $this->belongsTo(config('tomato-crm.model'));
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user()
+    public function employee()
     {
         return $this->belongsTo('App\Models\User', 'employee_id');
     }
@@ -63,7 +64,7 @@ class Timer extends Model
      */
     public function issue()
     {
-        return $this->belongsTo('App\Models\Issue');
+        return $this->belongsTo('TomatoPHP\TomatoTasks\Models\Issue');
     }
 
     /**
@@ -71,15 +72,15 @@ class Timer extends Model
      */
     public function project()
     {
-        return $this->belongsTo('App\Models\Project');
+        return $this->belongsTo('TomatoPHP\TomatoPms\Models\Project');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function types()
+    public function tags()
     {
-        return $this->belongsToMany('App\Models\Type', 'timers_has_tags', null, 'tag_id');
+        return $this->belongsToMany(Type::class, 'timers_has_tags', null, 'tag_id');
     }
 
     /**
@@ -87,6 +88,6 @@ class Timer extends Model
      */
     public function timersMetas()
     {
-        return $this->hasMany('App\Models\TimersMeta');
+        return $this->hasMany('TomatoPHP\TomatoTimer\Models\TimersMeta');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace TomatoPHP\TomatoTimer\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -15,7 +15,7 @@ class TimerController extends Controller
 
     public function __construct()
     {
-        $this->model = \App\Models\Timer::class;
+        $this->model = \TomatoPHP\TomatoTimer\Models\Timer::class;
     }
 
     /**
@@ -27,8 +27,8 @@ class TimerController extends Controller
         return Tomato::index(
             request: $request,
             model: $this->model,
-            view: 'admin.timers.index',
-            table: \App\Tables\TimerTable::class
+            view: 'tomato-timer::timers.index',
+            table: \TomatoPHP\TomatoTimer\Tables\TimerTable::class
         );
     }
 
@@ -40,7 +40,7 @@ class TimerController extends Controller
     {
         return Tomato::json(
             request: $request,
-            model: \App\Models\Timer::class,
+            model: \TomatoPHP\TomatoTimer\Models\Timer::class,
         );
     }
 
@@ -50,7 +50,7 @@ class TimerController extends Controller
     public function create(): View
     {
         return Tomato::create(
-            view: 'admin.timers.create',
+            view: 'tomato-timer::timers.create',
         );
     }
 
@@ -62,7 +62,7 @@ class TimerController extends Controller
     {
         $response = Tomato::store(
             request: $request,
-            model: \App\Models\Timer::class,
+            model: \TomatoPHP\TomatoTimer\Models\Timer::class,
             validation: [
                             'project_id' => 'nullable|exists:projects,id',
             'issue_id' => 'nullable|exists:issues,id',
@@ -93,35 +93,35 @@ class TimerController extends Controller
     }
 
     /**
-     * @param \App\Models\Timer $model
+     * @param \TomatoPHP\TomatoTimer\Models\Timer $model
      * @return View|JsonResponse
      */
-    public function show(\App\Models\Timer $model): View|JsonResponse
+    public function show(\TomatoPHP\TomatoTimer\Models\Timer $model): View|JsonResponse
     {
         return Tomato::get(
             model: $model,
-            view: 'admin.timers.show',
+            view: 'tomato-timer::timers.show',
         );
     }
 
     /**
-     * @param \App\Models\Timer $model
+     * @param \TomatoPHP\TomatoTimer\Models\Timer $model
      * @return View
      */
-    public function edit(\App\Models\Timer $model): View
+    public function edit(\TomatoPHP\TomatoTimer\Models\Timer $model): View
     {
         return Tomato::get(
             model: $model,
-            view: 'admin.timers.edit',
+            view: 'tomato-timer::timers.edit',
         );
     }
 
     /**
      * @param Request $request
-     * @param \App\Models\Timer $model
+     * @param \TomatoPHP\TomatoTimer\Models\Timer $model
      * @return RedirectResponse|JsonResponse
      */
-    public function update(Request $request, \App\Models\Timer $model): RedirectResponse|JsonResponse
+    public function update(Request $request, \TomatoPHP\TomatoTimer\Models\Timer $model): RedirectResponse|JsonResponse
     {
         $response = Tomato::update(
             request: $request,
@@ -156,10 +156,10 @@ class TimerController extends Controller
     }
 
     /**
-     * @param \App\Models\Timer $model
+     * @param \TomatoPHP\TomatoTimer\Models\Timer $model
      * @return RedirectResponse|JsonResponse
      */
-    public function destroy(\App\Models\Timer $model): RedirectResponse|JsonResponse
+    public function destroy(\TomatoPHP\TomatoTimer\Models\Timer $model): RedirectResponse|JsonResponse
     {
         $response = Tomato::destroy(
             model: $model,

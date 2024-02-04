@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace TomatoPHP\TomatoTimer\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $group
  * @property string $created_at
  * @property string $updated_at
- * @property Issue $issue
+ * @property Issue $linkedIssue
  * @property Timer $timer
  * @property User $user
  */
@@ -31,9 +31,9 @@ class TimersMeta extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function issue()
+    public function linkedIssue()
     {
-        return $this->belongsTo('App\Models\Issue', 'linked_id');
+        return $this->belongsTo('TomatoPHP\TomatoTasks\Models\Issue', 'linked_id');
     }
 
     /**
@@ -41,7 +41,7 @@ class TimersMeta extends Model
      */
     public function timer()
     {
-        return $this->belongsTo('App\Models\Timer');
+        return $this->belongsTo('TomatoPHP\TomatoTimer\Models\Timer');
     }
 
     /**
