@@ -38,10 +38,8 @@ class TomatoTimerInstall extends Command
     {
         $this->info('Publish Vendor Assets');
         $this->callSilent('optimize:clear');
-        $this->yarnCommand(['install']);
-        $this->yarnCommand(['build']);
         $this->artisanCommand(["migrate"]);
         $this->artisanCommand(["optimize:clear"]);
-        $this->info('tomatoTimer installed successfully.');
+        $this->info('Tomato Timer installed successfully.');
     }
 }

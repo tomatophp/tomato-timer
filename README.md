@@ -1,4 +1,6 @@
-# Tomato timer
+![Screenshot](https://github.com/tomatophp/tomato-timer/blob/master/art/screenshot.png)
+
+# Tomato Timer
 
 Time Management System for Tomato PMS
 
