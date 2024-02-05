@@ -61,6 +61,20 @@ class TimerTable extends AbstractTable
                 after: fn () => Toast::danger(__('Timer Has Been Deleted'))->autoDismiss(2),
                 confirm: true
             )
+            ->selectFilter(
+                key: 'employee_id',
+                label: __('Employee'),
+                remote_url: route('admin.users.api'),
+            )
+            ->boolFilter(
+                key: 'is_running',
+                label: __('Is running'),
+            )
+            ->boolFilter(
+                key: 'is_done',
+                label: __('Is done'),
+            )
+            ->dateFilter()
             ->defaultSort('id', 'desc')
             ->column(
                 key: 'id',
@@ -68,48 +82,23 @@ class TimerTable extends AbstractTable
                 sortable: true
             )
             ->column(
-                key: 'project_id',
-                label: __('Project id'),
+                key: 'issue.summary',
+                label: __('Issue'),
                 sortable: true
             )
             ->column(
-                key: 'issue_id',
-                label: __('Issue id'),
+                key: 'employee.name',
+                label: __('Employee'),
                 sortable: true
             )
             ->column(
-                key: 'account_id',
-                label: __('Account id'),
+                key: 'start_at',
+                label: __('Start at'),
                 sortable: true
             )
             ->column(
-                key: 'employee_id',
-                label: __('Employee id'),
-                sortable: true
-            )
-            ->column(
-                key: 'type',
-                label: __('Type'),
-                sortable: true
-            )
-            ->column(
-                key: 'status',
-                label: __('Status'),
-                sortable: true
-            )
-            ->column(
-                key: 'color',
-                label: __('Color'),
-                sortable: true
-            )
-            ->column(
-                key: 'icon',
-                label: __('Icon'),
-                sortable: true
-            )
-            ->column(
-                key: 'description',
-                label: __('Description'),
+                key: 'end_at',
+                label: __('End at'),
                 sortable: true
             )
             ->column(
@@ -120,11 +109,6 @@ class TimerTable extends AbstractTable
             ->column(
                 key: 'total_money',
                 label: __('Total money'),
-                sortable: true
-            )
-            ->column(
-                key: 'rounds',
-                label: __('Rounds'),
                 sortable: true
             )
             ->column(

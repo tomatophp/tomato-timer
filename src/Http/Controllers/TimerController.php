@@ -3,6 +3,8 @@
 namespace TomatoPHP\TomatoTimer\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -89,7 +91,7 @@ class TimerController extends Controller
             return $response;
         }
 
-        return $response->redirect;
+        return back();
     }
 
     /**
@@ -148,11 +150,32 @@ class TimerController extends Controller
             redirect: 'admin.timers.index',
         );
 
+        if($model->is_done){
+            $model->end_at = Carbon::now();
+            $model->total_time = $model->start_at->diffInMinutes($model->end_at) / 60;
+            if($model->issue?->project?->rate){
+                if($model->issue?->project?->rate_per == 'hour'){
+                    $model->total_money = $model->total_time * $model->issue?->project?->rate;
+                }
+                if($model->issue?->project?->rate_per == 'day'){
+                    $model->total_money = $model->total_time * ($model->issue?->project?->rate/8);
+                }
+                if($model->issue?->project?->rate_per == 'week'){
+                    $model->total_money = $model->total_time * ($model->issue?->project?->rate/40);
+                }
+                if($model->issue?->project?->rate_per == 'month'){
+                    $model->total_money = $model->total_time * ($model->issue?->project?->rate/160);
+                }
+
+                $model->save();
+            }
+        }
+
          if($response instanceof JsonResponse){
              return $response;
          }
 
-         return $response->redirect;
+         return back();
     }
 
     /**
@@ -171,6 +194,6 @@ class TimerController extends Controller
             return $response;
         }
 
-        return $response->redirect;
+        return back();
     }
 }

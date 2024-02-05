@@ -43,6 +43,16 @@ class Timer extends Model
      */
     protected $fillable = ['project_id', 'issue_id', 'account_id', 'employee_id', 'type', 'status', 'color', 'icon', 'description', 'start_at', 'last_stop_at', 'last_restart_at', 'end_at', 'total_time', 'total_money', 'rounds', 'is_running', 'is_done', 'is_billable', 'is_paid', 'created_at', 'updated_at'];
 
+    protected $casts = [
+        'start_at' => 'datetime',
+        'last_stop_at' => 'datetime',
+        'last_restart_at' => 'datetime',
+        'end_at' => 'datetime',
+        'is_running' => 'boolean',
+        'is_done' => 'boolean',
+        'is_billable' => 'boolean',
+        'is_paid' => 'boolean',
+    ];
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

@@ -4,6 +4,7 @@ namespace TomatoPHP\TomatoTimer;
 
 use Illuminate\Support\ServiceProvider;
 use TomatoPHP\TomatoAdmin\Facade\TomatoMenu;
+use TomatoPHP\TomatoAdmin\Facade\TomatoSlot;
 use TomatoPHP\TomatoAdmin\Services\Contracts\Menu;
 
 
@@ -59,7 +60,9 @@ class TomatoTimerServiceProvider extends ServiceProvider
                 ->group(__('PMS'))
                 ->label(__('Timer'))
                 ->route('admin.timers.index')
-                ->icon('bx bx-time'),
+                ->icon('bx bxs-time'),
         ]);
+
+        TomatoSlot::navLeftSide('tomato-timer::timers.header');
     }
 }
