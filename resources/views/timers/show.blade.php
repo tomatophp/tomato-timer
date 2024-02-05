@@ -1,13 +1,13 @@
 <x-tomato-admin-container label="{{trans('tomato-admin::global.crud.view')}} {{__('Timer')}} #{{$model->id}}">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        
-          <x-tomato-admin-row :label="__('Project')" :value="$model->Project->name" type="text" />
 
-          <x-tomato-admin-row :label="__('Issue')" :value="$model->Issue->id" type="text" />
+          <x-tomato-admin-row :label="__('Project')" :value="$model->project?->name" type="text" />
 
-          <x-tomato-admin-row :label="__('Account')" :value="$model->Account->name" type="text" />
+          <x-tomato-admin-row :label="__('Issue')" :value="$model->issue?->summary" type="text" />
 
-          <x-tomato-admin-row :label="__('Employee')" :value="$model->Employee->name" type="text" />
+          <x-tomato-admin-row :label="__('Account')" :value="$model->account?->name" type="text" />
+
+          <x-tomato-admin-row :label="__('Employee')" :value="$model->employee?->name" type="text" />
 
           <x-tomato-admin-row :label="__('Type')" :value="$model->type" type="string" />
 
@@ -22,8 +22,9 @@
           <x-tomato-admin-row :label="__('Total time')" :value="$model->total_time" type="number" />
 
           <x-tomato-admin-row :label="__('Total money')" :value="$model->total_money" type="number" />
+          <x-tomato-admin-row :label="__('Start at')" :value="$model->start_at" type="datetime" />
+          <x-tomato-admin-row :label="__('End at')" :value="$model->end_at" type="datetime" />
 
-          <x-tomato-admin-row :label="__('Rounds')" :value="$model->rounds" type="number" />
 
           <x-tomato-admin-row :label="__('Is running')" :value="$model->is_running" type="bool" />
 
