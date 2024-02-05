@@ -3,6 +3,8 @@
 namespace TomatoPHP\TomatoTimer;
 
 use Illuminate\Support\ServiceProvider;
+use TomatoPHP\TomatoAdmin\Facade\TomatoMenu;
+use TomatoPHP\TomatoAdmin\Services\Contracts\Menu;
 
 
 class TomatoTimerServiceProvider extends ServiceProvider
@@ -52,6 +54,12 @@ class TomatoTimerServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //you boot methods here
+        TomatoMenu::register([
+            Menu::make()
+                ->group(__('PMS'))
+                ->label(__('Timer'))
+                ->route('admin.timers.index')
+                ->icon('bx bx-time'),
+        ]);
     }
 }

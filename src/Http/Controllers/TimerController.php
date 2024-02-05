@@ -1,0 +1,176 @@
+<?php
+
+namespace TomatoPHP\TomatoTimer\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+use TomatoPHP\TomatoAdmin\Facade\Tomato;
+
+class TimerController extends Controller
+{
+    public string $model;
+
+    public function __construct()
+    {
+        $this->model = \TomatoPHP\TomatoTimer\Models\Timer::class;
+    }
+
+    /**
+     * @param Request $request
+     * @return View|JsonResponse
+     */
+    public function index(Request $request): View|JsonResponse
+    {
+        return Tomato::index(
+            request: $request,
+            model: $this->model,
+            view: 'tomato-timer::timers.index',
+            table: \TomatoPHP\TomatoTimer\Tables\TimerTable::class
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function api(Request $request): JsonResponse
+    {
+        return Tomato::json(
+            request: $request,
+            model: \TomatoPHP\TomatoTimer\Models\Timer::class,
+        );
+    }
+
+    /**
+     * @return View
+     */
+    public function create(): View
+    {
+        return Tomato::create(
+            view: 'tomato-timer::timers.create',
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse|JsonResponse
+     */
+    public function store(Request $request): RedirectResponse|JsonResponse
+    {
+        $response = Tomato::store(
+            request: $request,
+            model: \TomatoPHP\TomatoTimer\Models\Timer::class,
+            validation: [
+                            'project_id' => 'nullable|exists:projects,id',
+            'issue_id' => 'nullable|exists:issues,id',
+            'account_id' => 'nullable|exists:accounts,id',
+            'employee_id' => 'required|exists:users,id',
+            'type' => 'nullable|max:255|string',
+            'status' => 'nullable|max:255|string',
+            'color' => 'nullable|max:255',
+            'icon' => 'nullable|max:255',
+            'description' => 'nullable|max:255|string',
+            'total_time' => 'nullable',
+            'total_money' => 'nullable',
+            'rounds' => 'nullable',
+            'is_running' => 'nullable',
+            'is_done' => 'nullable',
+            'is_billable' => 'nullable',
+            'is_paid' => 'nullable'
+            ],
+            message: __('Timer updated successfully'),
+            redirect: 'admin.timers.index',
+        );
+
+        if($response instanceof JsonResponse){
+            return $response;
+        }
+
+        return $response->redirect;
+    }
+
+    /**
+     * @param \TomatoPHP\TomatoTimer\Models\Timer $model
+     * @return View|JsonResponse
+     */
+    public function show(\TomatoPHP\TomatoTimer\Models\Timer $model): View|JsonResponse
+    {
+        return Tomato::get(
+            model: $model,
+            view: 'tomato-timer::timers.show',
+        );
+    }
+
+    /**
+     * @param \TomatoPHP\TomatoTimer\Models\Timer $model
+     * @return View
+     */
+    public function edit(\TomatoPHP\TomatoTimer\Models\Timer $model): View
+    {
+        return Tomato::get(
+            model: $model,
+            view: 'tomato-timer::timers.edit',
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param \TomatoPHP\TomatoTimer\Models\Timer $model
+     * @return RedirectResponse|JsonResponse
+     */
+    public function update(Request $request, \TomatoPHP\TomatoTimer\Models\Timer $model): RedirectResponse|JsonResponse
+    {
+        $response = Tomato::update(
+            request: $request,
+            model: $model,
+            validation: [
+                            'project_id' => 'nullable|exists:projects,id',
+            'issue_id' => 'nullable|exists:issues,id',
+            'account_id' => 'nullable|exists:accounts,id',
+            'employee_id' => 'sometimes|exists:users,id',
+            'type' => 'nullable|max:255|string',
+            'status' => 'nullable|max:255|string',
+            'color' => 'nullable|max:255',
+            'icon' => 'nullable|max:255',
+            'description' => 'nullable|max:255|string',
+            'total_time' => 'nullable',
+            'total_money' => 'nullable',
+            'rounds' => 'nullable',
+            'is_running' => 'nullable',
+            'is_done' => 'nullable',
+            'is_billable' => 'nullable',
+            'is_paid' => 'nullable'
+            ],
+            message: __('Timer updated successfully'),
+            redirect: 'admin.timers.index',
+        );
+
+         if($response instanceof JsonResponse){
+             return $response;
+         }
+
+         return $response->redirect;
+    }
+
+    /**
+     * @param \TomatoPHP\TomatoTimer\Models\Timer $model
+     * @return RedirectResponse|JsonResponse
+     */
+    public function destroy(\TomatoPHP\TomatoTimer\Models\Timer $model): RedirectResponse|JsonResponse
+    {
+        $response = Tomato::destroy(
+            model: $model,
+            message: __('Timer deleted successfully'),
+            redirect: 'admin.timers.index',
+        );
+
+        if($response instanceof JsonResponse){
+            return $response;
+        }
+
+        return $response->redirect;
+    }
+}
